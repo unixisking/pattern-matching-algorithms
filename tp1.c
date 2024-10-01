@@ -41,11 +41,17 @@ int maxNode = 13;
     Trie trie = createTrie(maxNode);
 
     // Insert words into the trie
-    unsigned char *w1 = (unsigned char *)"a";
-    unsigned char *w3 = (unsigned char *)"a";
+    unsigned char *w1 = (unsigned char *)"tobi";
+    unsigned char *w3 = (unsigned char *)"to";
+    unsigned char *different = (unsigned char *)"tbo";
     // unsigned char *w2 = (unsigned char *)"tob";
-    insertInTrie(trie, w1);
+    // insertInTrie(trie, w1);
     // insertInTrie(trie, w2); // Added second word insertion
-    printf("\nreturn : %d\n", isInTrie(trie, w3));
+
+    insertPrefixes(trie, w1);
+    printf("\nreturn : %d\n", isInTrie(trie, different));
+
+    printf("isIn: %d", isInTrie(trie, w3));
+
     return 0;
 }
