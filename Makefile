@@ -8,8 +8,11 @@ DEPS = trie-tm.h trie-hashtable.h
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-tp1: tp1.o trie-tm.o trie-hashtable.o
+tp1-tm: tp1.o trie-tm.o trie-hashtable.o
 	$(CC) -o tp1 tp1.o trie-tm.o trie-hashtable.o $(CFLAGS)
+
+tp1-hashtable: tp1.o trie-hashtable.o
+	$(CC) -o tp1 tp1.o trie-hashtable.o $(CFLAGS)
 
 .PHONY: clean
 

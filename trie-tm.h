@@ -1,6 +1,7 @@
 #ifndef HEADER_TRIE_TM
 #define HEADER_TRIE_TM
 
+
 /* Data structure declarations */
 
 struct _trie {
@@ -34,7 +35,7 @@ void insertInTrie(Trie trie, unsigned char *w);
 
 /**
  *
- * Checks whether word exist in Trie
+ * Checks whether word exist in Trie, returns 1 if it doesn't exist, and 0 if it does.
  * Args: takes trie and word as inputs
  *
  **/

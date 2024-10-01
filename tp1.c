@@ -1,32 +1,51 @@
 #include <stdio.h>
-#include "trie-tm.h"
+// #include "trie-tm.h"
+#include "trie-hashtable.h"
+#include <stdlib.h>
 #include "limits.h"
-
-int main() {
-    Trie trie = createTrie(10);
-    unsigned char *w = (unsigned char*) "tac";
-    unsigned char *w3 = (unsigned char*) "tob";
+    // Trie trie = createTrie(10);
+    // unsigned char *w = (unsigned char*) "tac";
+    // unsigned char *w3 = (unsigned char*) "tob";
     
-    insertInTrie(trie, w);
-    insertInTrie(trie, w3);
+    // insertInTrie(trie, w);
+    // insertInTrie(trie, w3);
 
-    printf("\nnextNode %d\n", trie->nextNode);
-
-
-    for(int i = 0; i < UCHAR_MAX; i++) {
-        if(trie->transitions[i] != NULL) {
-            printf("currentNode %d\n ", i);
-            for(int j = 0; j < UCHAR_MAX; j++) {
-                if(trie->transitions[i][j]) {
-                    printf("transition to node %d with char %c, ", trie->transitions[i][j], j);
-                }
-
-            }
+    // printf("\nnextNode %d\n", trie->nextNode);
 
 
-            printf("\nEnd current node %d\n", i);
-        }
+    // for(int i = 0; i < UCHAR_MAX; i++) {
+    //     if(trie->transitions[i] != NULL) {
+    //         printf("currentNode %d\n ", i);
+    //         for(int j = 0; j < UCHAR_MAX; j++) {
+    //             if(trie->transitions[i][j] != -1) {
+    //                 printf("transition to node %d with char %c, ", trie->transitions[i][j], j);
+    //             }
 
-    }
+    //         }
+
+
+    //         printf("\nEnd current node %d\n", i);
+    //     }
+
+    // }
+
+    // unsigned char *check = (unsigned char*) "tob";
+    // printf("is %s in trie: %d\n",check, isInTrie(trie, check));
+
+
+    /* trie-hashtable.c */
+int main() {
+
+
+int maxNode = 13;
+    Trie trie = createTrie(maxNode);
+
+    // Insert words into the trie
+    unsigned char *w1 = (unsigned char *)"a";
+    unsigned char *w3 = (unsigned char *)"a";
+    // unsigned char *w2 = (unsigned char *)"tob";
+    insertInTrie(trie, w1);
+    // insertInTrie(trie, w2); // Added second word insertion
+    printf("\nreturn : %d\n", isInTrie(trie, w3));
     return 0;
 }

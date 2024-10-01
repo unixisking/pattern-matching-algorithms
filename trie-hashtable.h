@@ -2,6 +2,9 @@
 #ifndef HEADER_TRIE_HASHTABLE
 #define HEADER_TRIE_HASHTABLE
 
+/* Constants declarations */
+#define MAX_NODE_MULTIPLIER 3
+
 /* Data structure declarations */
 
 struct _list {
@@ -49,6 +52,11 @@ void insertInTrie(Trie trie, unsigned char *w);
  *
  **/
 int isInTrie(Trie trie, unsigned char *w);
+
+/**
+ * hashes a transition and outputs a number between 0 and maxNode * MAX_NODE_MULTIPLIER
+ */
+int hash_function(int state, unsigned char c, int maxNode);
 
 /* End function prototypes */
 
