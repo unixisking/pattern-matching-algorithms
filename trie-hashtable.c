@@ -137,7 +137,18 @@ void insertPrefixes(Trie trie, unsigned char *w) {
 }
 
 void insertSuffixes(Trie trie, unsigned char *w) {
+    int length = strlen((char *) w);
+    unsigned char suffix[length + 1];
+
+    for(int i = length - 1, copyCount = 1; i >= 0; i--, copyCount++) {
+        memcpy(suffix, &w[i], copyCount);
+        suffix[copyCount] = '\0';
+        insertInTrie(trie, suffix);
+    }
+
 
 }
 
-void insertFactors(Trie trie, unsigned char *w) {}
+void insertFactors(Trie trie, unsigned char *w) {
+    
+}
