@@ -127,39 +127,3 @@ int isInTrie(Trie trie, unsigned char *w) {
     }
     return 0;
 }
-
-void insertPrefixes(Trie trie, unsigned char *w) {
-    int length = strlen((char *) w);
-    unsigned char prefix[length + 1];
-
-    for(int i = 0; i < length; i++) {
-        strncpy((char*) prefix, (char *) w, i+1);
-        prefix[i+1]='\0';
-        insertInTrie(trie, prefix);
-    }
-
-}
-
-void insertSuffixes(Trie trie, unsigned char *w) {
-    int length = strlen((char *) w);
-    unsigned char suffix[length + 1];
-
-    for(int i = length - 1, copyCount = 1; i >= 0; i--, copyCount++) {
-        memcpy(suffix, &w[i], copyCount);
-        suffix[copyCount] = '\0';
-        insertInTrie(trie, suffix);
-    }
-}
-
-/* Add all prefixes of all suffixes starting with the biggest suffix */
-void insertFactors(Trie trie, unsigned char *w) {
-    int length = strlen((char *) w);
-    unsigned char suffix[length + 1];
-
-    for(int i = 0, copyCount = length; i < length; i++, copyCount--) {
-        memcpy(suffix, &w[i], copyCount);
-        suffix[copyCount] = '\0';
-        insertInTrie(trie, suffix);
-        insertPrefixes(trie, suffix);
-    }
-}

@@ -58,24 +58,6 @@ int isInTrie(Trie trie, unsigned char *w);
  */
 int hash_function(int state, unsigned char c, int maxNode);
 
-/**
- * 
- * Insert all prefixes of a word
- */
-void insertPrefixes(Trie trie, unsigned char *w);
-
-/**
- * 
- * Insert all Suffixes of a word
- */
-void insertSuffixes(Trie trie, unsigned char *w);
-
-/**
- * 
- * Insert all factors of a word
- */
-void insertFactors(Trie trie, unsigned char *w);
-
 /* End function prototypes */
 
 #endif
