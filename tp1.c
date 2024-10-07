@@ -34,30 +34,25 @@
 
 
     /* trie-hashtable.c */
+
 int main() {
 
 
-int maxNode = 13;
+int maxNode = 100;
     Trie trie = createTrie(maxNode);
 
-    // Insert words into the trie
-    unsigned char *w1 = (unsigned char *)"tobi";
-    unsigned char *w3 = (unsigned char *)"to";
-    unsigned char *suffix = (unsigned char *)"bi";
-    unsigned char *different = (unsigned char *)"tbo";
-    // unsigned char *w2 = (unsigned char *)"tob";
-    // insertInTrie(trie, w1);
-    // insertInTrie(trie, w2); // Added second word insertion
+    unsigned char *w1 = (unsigned char *)"abaababa";
 
-    insertPrefixes(trie, w1);
-    printf("\nreturn : %d\n", isInTrie(trie, different));
+    insertFactors(trie, w1);
 
-    printf("isIn: %d\n", isInTrie(trie, w3));
-
-
-    insertSuffixes(trie, w1);
-
-    printf("isSuffixIn: %d\n", isInTrie(trie, suffix));
+    int count = 0;
+    for(int i = 0; i < maxNode; i++) {
+        if(trie->finite[i] == 1) {
+            count++;
+        }
+    }
+    printf("\n");
+    printf("m = %d", count);
 
     return 0;
 }

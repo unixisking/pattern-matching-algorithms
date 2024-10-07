@@ -12,6 +12,7 @@ int hash_function(int state, unsigned char c, int maxNode) {
 
 Trie createTrie(int maxNode) {
     int maxTransitions = maxNode * MAX_NODE_MULTIPLIER;
+    
     Trie trie = malloc(sizeof(struct _trie));
     if(trie == NULL) { return NULL; }
 
@@ -50,7 +51,6 @@ void insertInTrie(Trie trie, unsigned char *w) {
     int currentState = 0;
     for(unsigned char *currentChar = w; *currentChar != '\0'; currentChar++) {
         int hash = hash_function(currentState, *currentChar, trie->maxNode);
-        printf("hash for character %c is %d\n", *currentChar, hash);
 
         /* No hash collision: allocate List for transition */
         if(trie->transitions[hash] == NULL) {
@@ -63,7 +63,11 @@ void insertInTrie(Trie trie, unsigned char *w) {
         int transitionFound = 0;
 
         while(currentNode != NULL) {
-            /* We encounter a char that was already added with the same state then: skip creation of newNode */
+            /*
+             * When encountering a char that was already added 
+             * with the same state then skip creation of newNode 
+             * */
+
             if(currentNode->letter == *currentChar && currentState == currentNode->startNode) {
                 transitionFound = 1;
                 currentState = currentNode->targetNode;
@@ -78,7 +82,6 @@ void insertInTrie(Trie trie, unsigned char *w) {
             newNode->startNode = currentState;
             newNode->letter = *currentChar;
             newNode->targetNode = ++trie->nextNode;
-            // printf("target for letter %c is %d and startNode is %d and hhash is %d\n", newNode->letter, newNode->targetNode, newNode->startNode, hash);
             newNode->next = NULL;
 
             if(prevNode == NULL) {
@@ -134,6 +137,7 @@ void insertPrefixes(Trie trie, unsigned char *w) {
         prefix[i+1]='\0';
         insertInTrie(trie, prefix);
     }
+
 }
 
 void insertSuffixes(Trie trie, unsigned char *w) {
@@ -145,10 +149,17 @@ void insertSuffixes(Trie trie, unsigned char *w) {
         suffix[copyCount] = '\0';
         insertInTrie(trie, suffix);
     }
-
-
 }
 
+/* Add all prefixes of all suffixes starting with the biggest suffix */
 void insertFactors(Trie trie, unsigned char *w) {
-    
+    int length = strlen((char *) w);
+    unsigned char suffix[length + 1];
+
+    for(int i = 0, copyCount = length; i < length; i++, copyCount--) {
+        memcpy(suffix, &w[i], copyCount);
+        suffix[copyCount] = '\0';
+        insertInTrie(trie, suffix);
+        insertPrefixes(trie, suffix);
+    }
 }
