@@ -1,7 +1,7 @@
-#include "trie-tm.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "limits.h"
+#include "trie_tm.h"
 
 Trie createTrie(int maxNode) {
     Trie trie = malloc(sizeof(struct _trie));

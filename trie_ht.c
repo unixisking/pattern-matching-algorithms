@@ -1,8 +1,8 @@
-#include "trie-hashtable.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "limits.h"
+#include "trie_ht.h"
 
 int hash_function(int state, unsigned char c, int maxNode) {
     int m = maxNode * MAX_NODE_MULTIPLIER;

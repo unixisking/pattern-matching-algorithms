@@ -1,21 +1,19 @@
 CC = gcc
-CFLAGS = -I.
+CFLAGS = -I. -Wall -g
 RM = rm -f
-OBJ = main.o trie-tm.o trie-hashtable.o
-DEPS = trie-tm.h trie-hashtable.h
+DEPS = trie_tm.h trie_ht.h
 
 # Compiling to object files without linking
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-trie-tm: main.o trie-tm.o trie-hashtable.o
-	$(CC) -o main main.o trie-tm.o $(CFLAGS)
+trie_tm: main_tm.o trie_tm.o
+	$(CC) -o trie_tm main_tm.o trie_tm.o $(CFLAGS)
 
-trie-hashtable: main.o trie-hashtable.o
-	$(CC) -o main main.o trie-hashtable.o $(CFLAGS)
+trie_ht: main_ht.o trie_ht.o
+	$(CC) -o trie_ht main_ht.o trie_ht.o $(CFLAGS)
 
 .PHONY: clean
 
 clean:
-	$(RM) $(OBJ) main
-
+	$(RM) *.o trie_tm trie_ht
