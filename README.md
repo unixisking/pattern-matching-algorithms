@@ -15,6 +15,9 @@ This repository contains an implementation of a **Trie** (prefix tree) in C, a d
 Trie createTrie(int maxNode);
 void insertInTrie(Trie trie, unsigned char *w);
 int isInTrie(Trie trie, unsigned char *w);
+void insertPrefixes(Trie trie, unsigned char *w);
+void insertSuffixes(Trie trie, unsigned char *w);
+void insertFactors(Trie trie, unsigned char *w);
 ```
 
 ## Project Structure
