@@ -1,129 +1,133 @@
+#include "trie_ht.h"
+#include "limits.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "limits.h"
-#include "trie_ht.h"
 
 int hash_function(int state, unsigned char c, int maxNode) {
-    int m = maxNode * MAX_NODE_MULTIPLIER;
-    int prime = 31;
-    return (state * prime + c) % m;
+  int m = maxNode * MAX_NODE_MULTIPLIER;
+  int prime = 31;
+  return (state * prime + c) % m;
 }
 
 Trie createTrie(int maxNode) {
-    int maxTransitions = maxNode * MAX_NODE_MULTIPLIER;
-    
-    Trie trie = malloc(sizeof(struct _trie));
-    if(trie == NULL) { return NULL; }
+  int maxTransitions = maxNode * MAX_NODE_MULTIPLIER;
 
-    trie->maxNode = maxNode;
-    trie->nextNode = 0;
-    trie->transitions = malloc(sizeof(List) * maxTransitions);
+  Trie trie = malloc(sizeof(struct _trie));
+  if (trie == NULL) {
+    return NULL;
+  }
 
-    if(trie->transitions == NULL) {
-        free(trie);
-        return NULL;
-    }
+  trie->maxNode = maxNode;
+  trie->nextNode = 0;
+  trie->transitions = malloc(sizeof(List) * maxTransitions);
 
-    for(int i = 0; i < maxTransitions;  i++) {
-        trie->transitions[i] = NULL;
-    }
+  if (trie->transitions == NULL) {
+    free(trie);
+    return NULL;
+  }
 
-    trie->finite = malloc(sizeof(char) * maxNode);
+  for (int i = 0; i < maxTransitions; i++) {
+    trie->transitions[i] = NULL;
+  }
 
-    if(trie->finite == NULL) {
-        free(trie->transitions);
-        free(trie);
-        return NULL;
-    }
+  trie->finite = malloc(sizeof(char) * maxNode);
 
-    for(int i = 0; i < maxNode; i++) {
-        trie->finite[i] = 0;
-    }
+  if (trie->finite == NULL) {
+    free(trie->transitions);
+    free(trie);
+    return NULL;
+  }
 
-    return trie;
+  for (int i = 0; i < maxNode; i++) {
+    trie->finite[i] = 0;
+  }
+
+  return trie;
 }
 
 void insertInTrie(Trie trie, unsigned char *w) {
-    /* If trie is null then bail */
-    if(trie == NULL) { return; }
+  /* If trie is null then bail */
+  if (trie == NULL) {
+    return;
+  }
 
-    int currentState = 0;
-    for(unsigned char *currentChar = w; *currentChar != '\0'; currentChar++) {
-        int hash = hash_function(currentState, *currentChar, trie->maxNode);
+  int currentState = 0;
+  for (unsigned char *currentChar = w; *currentChar != '\0'; currentChar++) {
+    int hash = hash_function(currentState, *currentChar, trie->maxNode);
 
-        /* No hash collision: allocate List for transition */
-        if(trie->transitions[hash] == NULL) {
-            trie->transitions[hash] = malloc(sizeof(List));
-            *trie->transitions[hash] = NULL;
-        }
-
-        List currentNode = *trie->transitions[hash];
-        List prevNode = NULL;
-        int transitionFound = 0;
-
-        while(currentNode != NULL) {
-            /*
-             * When encountering a char that was already added 
-             * with the same state then skip creation of newNode 
-             * */
-
-            if(currentNode->letter == *currentChar && currentState == currentNode->startNode) {
-                transitionFound = 1;
-                currentState = currentNode->targetNode;
-                break;
-            }
-            prevNode = currentNode;
-            currentNode = currentNode->next;
-        }
-        if(transitionFound == 0) {
-            List newNode = malloc(sizeof(struct _list));
-
-            newNode->startNode = currentState;
-            newNode->letter = *currentChar;
-            newNode->targetNode = ++trie->nextNode;
-            newNode->next = NULL;
-
-            if(prevNode == NULL) {
-                *trie->transitions[hash] = newNode;
-            }
-            else {
-                prevNode->next = newNode;
-            }
-            currentState = newNode->targetNode;
-        }
+    /* No hash collision: allocate List for transition */
+    if (trie->transitions[hash] == NULL) {
+      trie->transitions[hash] = malloc(sizeof(List));
+      *trie->transitions[hash] = NULL;
     }
-    trie->finite[currentState] = 1;
+
+    List currentNode = *trie->transitions[hash];
+    List prevNode = NULL;
+    int transitionFound = 0;
+
+    while (currentNode != NULL) {
+      /*
+       * When encountering a char that was already added
+       * with the same state then skip creation of newNode
+       * */
+
+      if (currentNode->letter == *currentChar &&
+          currentState == currentNode->startNode) {
+        transitionFound = 1;
+        currentState = currentNode->targetNode;
+        break;
+      }
+      prevNode = currentNode;
+      currentNode = currentNode->next;
+    }
+    if (transitionFound == 0) {
+      List newNode = malloc(sizeof(struct _list));
+
+      newNode->startNode = currentState;
+      newNode->letter = *currentChar;
+      newNode->targetNode = ++trie->nextNode;
+      newNode->next = NULL;
+
+      if (prevNode == NULL) {
+        *trie->transitions[hash] = newNode;
+      } else {
+        prevNode->next = newNode;
+      }
+      currentState = newNode->targetNode;
+    }
+  }
+  trie->finite[currentState] = 1;
 }
 
 int isInTrie(Trie trie, unsigned char *w) {
 
-    if(*w == '\0') { return 1; }
+  if (*w == '\0') {
+    return 1;
+  }
 
-    int state = 0;
-    for(unsigned char *c = w; *c != '\0'; c++) {
+  int state = 0;
+  for (unsigned char *c = w; *c != '\0'; c++) {
 
-        int hash = hash_function(state, *c, trie->maxNode);
+    int hash = hash_function(state, *c, trie->maxNode);
 
-        if(trie->transitions[hash] != NULL) {
-            List currentNode = *trie->transitions[hash];
+    if (trie->transitions[hash] != NULL) {
+      List currentNode = *trie->transitions[hash];
 
-            while(currentNode != NULL) {
-                if(currentNode->letter == *c) {
-                    state = currentNode->targetNode;
-                    break;
-                } 
-                else {
-                    currentNode = currentNode->next;
-                }
-            }
-            if(currentNode == NULL) {
-                return 1;
-            }
+      while (currentNode != NULL) {
+        if (currentNode->letter == *c) {
+          state = currentNode->targetNode;
+          break;
+        } else {
+          currentNode = currentNode->next;
         }
-        else {
-            return 1;
-        }
+      }
+      if (currentNode == NULL) {
+        return 1;
+      }
+    } else {
+      return 1;
     }
-    return 0;
+  }
+  return 0;
 }
