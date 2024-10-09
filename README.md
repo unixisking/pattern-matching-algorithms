@@ -79,7 +79,7 @@ typedef struct _trie *Trie;
 
 #### Usage
 
-To run the hash table implementation : test
+To run the hash table implementation :
 
 
 ```c
