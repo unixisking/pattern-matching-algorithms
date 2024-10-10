@@ -14,7 +14,7 @@ int hash_function(int state, unsigned char c, int maxNode) {
 Trie createTrie(int maxNode) {
   /* 
    * maxTransitions is M: the maximum amount of space to hold transitions
-   * MAX_NODE_MULTIPLIER: is constant set to 3 chosen to reduce the number of collisions.
+   * MAX_NODE_MULTIPLIER: is a constant set to 3 chosen to reduce the number of collisions.
    * */
   int maxTransitions = maxNode * MAX_NODE_MULTIPLIER;
 
@@ -67,6 +67,7 @@ void insertInTrie(Trie trie, unsigned char *w) {
     }
 
     List currentNode = *trie->transitions[hash];
+    /* prevNode is used in the case where we reached the end of the LinkedList without finding the transition */
     List prevNode = NULL;
     /*
      * Here we are using transitionFound to check for a transition with the same startNode and letter
