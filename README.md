@@ -91,5 +91,13 @@ make trie_ht && ./trie_ht
 
 ```
 
+To clean the project from executables :
+
+```c
+
+make clean
+
+```
+
 
 

@@ -69,18 +69,18 @@ void insertInTrie(Trie trie, unsigned char *w) {
 }
 
 int isInTrie(Trie trie, unsigned char *w) {
-  if (trie == NULL) {
-    return 1;
+  if (trie == NULL || *w == '\0') {
+    return 0;
   }
 
   int currentNode = 0;
   for (unsigned char *currentChar = w; *currentChar != '\0'; currentChar++) {
     if (trie->transitions[currentNode] == NULL ||
         trie->transitions[currentNode][*currentChar] == -1) {
-      return 1;
+      return 0;
     }
     currentNode = trie->transitions[currentNode][*currentChar];
   }
 
-  return trie->finite[currentNode] == 1 ? 0 : 1;
+  return trie->finite[currentNode] == 1 ? 1 : 0;
 }

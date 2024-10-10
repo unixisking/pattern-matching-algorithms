@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* Hashes a state and a letter to a number between 0 and M */
 int hash_function(int state, unsigned char c, int maxNode) {
   int m = maxNode * MAX_NODE_MULTIPLIER;
   int prime = 31;
@@ -11,6 +12,10 @@ int hash_function(int state, unsigned char c, int maxNode) {
 }
 
 Trie createTrie(int maxNode) {
+  /* 
+   * maxTransitions is M: the maximum amount of space to hold transitions
+   * MAX_NODE_MULTIPLIER: is constant set to 3 chosen to reduce the number of collisions.
+   * */
   int maxTransitions = maxNode * MAX_NODE_MULTIPLIER;
 
   Trie trie = malloc(sizeof(struct _trie));
@@ -47,7 +52,6 @@ Trie createTrie(int maxNode) {
 }
 
 void insertInTrie(Trie trie, unsigned char *w) {
-  /* If trie is null then bail */
   if (trie == NULL) {
     return;
   }
@@ -64,6 +68,12 @@ void insertInTrie(Trie trie, unsigned char *w) {
 
     List currentNode = *trie->transitions[hash];
     List prevNode = NULL;
+    /*
+     * Here we are using transitionFound to check for a transition with the same startNode and letter
+     * if a transition exist we set it to 1 and therefore skip adding the character
+     * If a transition is not found then: we allocate memory for a new node and add it 
+     *
+     * */
     int transitionFound = 0;
 
     while (currentNode != NULL) {
@@ -102,8 +112,11 @@ void insertInTrie(Trie trie, unsigned char *w) {
 
 int isInTrie(Trie trie, unsigned char *w) {
 
-  if (*w == '\0') {
-    return 1;
+  /*
+   * Check if the word is Empty
+   */
+  if (trie == NULL || *w == '\0') {
+    return 0;
   }
 
   int state = 0;
@@ -114,20 +127,21 @@ int isInTrie(Trie trie, unsigned char *w) {
     if (trie->transitions[hash] != NULL) {
       List currentNode = *trie->transitions[hash];
 
+      /* If a transition is found then we traverse the linked list until we find the right char */
       while (currentNode != NULL) {
         if (currentNode->letter == *c) {
           state = currentNode->targetNode;
-          break;
+          break; // When the char is found, we break out of the loop and move on to the next one 
         } else {
           currentNode = currentNode->next;
         }
       }
       if (currentNode == NULL) {
-        return 1;
+        return 0;
       }
     } else {
-      return 1;
+      return 0;
     }
   }
-  return 0;
+  return trie->finite[state] == 1 ? 1 : 0;
 }

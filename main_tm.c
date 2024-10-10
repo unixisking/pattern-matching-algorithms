@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* Inserts prefixes starting with the smallest one */
 void insertPrefixes(Trie trie, unsigned char *w) {
   int length = strlen((char *)w);
   unsigned char prefix[length + 1];
@@ -16,6 +17,7 @@ void insertPrefixes(Trie trie, unsigned char *w) {
   }
 }
 
+/* Inserts suffixes starting with the smallest one */
 void insertSuffixes(Trie trie, unsigned char *w) {
   int length = strlen((char *)w);
   unsigned char suffix[length + 1];
@@ -27,6 +29,7 @@ void insertSuffixes(Trie trie, unsigned char *w) {
   }
 }
 
+/* Inserts the factors starting with the prefixes of the longest suffix until we reach the prefixes of the shortest suffixes */
 void insertFactors(Trie trie, unsigned char *w) {
   int length = strlen((char *)w);
   unsigned char suffix[length + 1];
@@ -42,11 +45,13 @@ void insertFactors(Trie trie, unsigned char *w) {
 int main() {
   int maxNode = 100;
   Trie trie = createTrie(maxNode);
+
   unsigned char *w1 = (unsigned char *)"abaababa";
+  unsigned char *w2 = (unsigned char *)"abaa";
 
-  // insertInTrie(trie, w1);
+  printf("Adding prefixes, suffixes and factors of the word: %s\n", w1);
 
-  insertFactors(trie, w1);
+  insertPrefixes(trie, w1);
 
   int count = 0;
   for (int i = 0; i < maxNode; i++) {
@@ -54,36 +59,9 @@ int main() {
       count++;
     }
   }
-  printf("\n");
-  printf("finite states = %d", count);
-  printf("\n");
-  printf("nextode= %d", trie->nextNode);
-  /*
-  int count = 0;
-  for(int i = 0; i < maxNode; i++) {
-      if(trie->finite[i] == 1) {
-          count++;
-      }
 
-  }
-  */
-  // printf("m = %d", count);
-  /*tmri   r
-  for(int i = 0; i < UCHAR_MAX; i++) {
-      if(trie->transitions[i] != NULL) {
-          printf("currentNode %d\n ", i);
-          for(int j = 0; j < UCHAR_MAX; j++) {
-              if(trie->transitions[i][j] != -1) {
-                  printf("transition to node %d with char %c, ",
-  trie->transitions[i][j], j);
-              }
+  printf("isInTrie: %d\n", isInTrie(trie, w2));
 
-          }
+  return 0;
 
-
-          printf("\nEnd current node %d\n", i);
-      }
-
-  }
-  */
 }

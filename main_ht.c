@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* Inserts prefixes starting with the smallest one */
 void insertPrefixes(Trie trie, unsigned char *w) {
   int length = strlen((char *)w);
   unsigned char prefix[length + 1];
@@ -15,6 +16,7 @@ void insertPrefixes(Trie trie, unsigned char *w) {
   }
 }
 
+/* Inserts suffixes starting with the smallest one */
 void insertSuffixes(Trie trie, unsigned char *w) {
   int length = strlen((char *)w);
   unsigned char suffix[length + 1];
@@ -26,6 +28,8 @@ void insertSuffixes(Trie trie, unsigned char *w) {
   }
 }
 
+
+/* Inserts the factors starting with the prefixes of the longest suffix until we reach the prefixes of the shortest suffixes */
 void insertFactors(Trie trie, unsigned char *w) {
   int length = strlen((char *)w);
   unsigned char suffix[length + 1];
@@ -43,8 +47,11 @@ int main() {
   Trie trie = createTrie(maxNode);
 
   unsigned char *w1 = (unsigned char *)"abaababa";
+  unsigned char *w2 = (unsigned char *)"abaa";
 
-  insertFactors(trie, w1);
+  printf("Adding prefixes, suffixes and factors of the word: %s\n", w1);
+
+  insertSuffixes(trie, w1);
 
   int count = 0;
   for (int i = 0; i < maxNode; i++) {
@@ -52,10 +59,8 @@ int main() {
       count++;
     }
   }
-  printf("\n");
-  printf("finite states = %d", count);
-  printf("\n");
-  printf("nextode= %d", trie->nextNode);
+
+  printf("isInTrie: %d\n", isInTrie(trie, w2));
 
   return 0;
 }

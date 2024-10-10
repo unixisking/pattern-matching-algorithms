@@ -18,7 +18,7 @@ typedef struct _list *List;
 struct _trie {
     int maxNode, /* Max amount of trie nodes */
         nextNode; /* Index of next available node */
-    List **transitions; /* Adjacency list */
+    List **transitions; 
     char *finite; /* Finite states */
 };
 
@@ -48,6 +48,7 @@ void insertInTrie(Trie trie, unsigned char *w);
  *
  * Checks whether word exist in Trie
  * Args: takes trie and word as inputs
+ * Returns 1 if True and 0 if False
  *
  **/
 int isInTrie(Trie trie, unsigned char *w);
