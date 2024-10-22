@@ -1,4 +1,3 @@
-
 #ifndef HEADER_TRIE_HASHTABLE
 #define HEADER_TRIE_HASHTABLE
 
@@ -19,7 +18,7 @@ typedef struct _list *List;
 struct _trie {
     int maxNode, /* Max amount of trie nodes */
         nextNode; /* Index of next available node */
-    List **transitions; /* Adjacency list */
+    List **transitions; 
     char *finite; /* Finite states */
 };
 
@@ -49,6 +48,7 @@ void insertInTrie(Trie trie, unsigned char *w);
  *
  * Checks whether word exist in Trie
  * Args: takes trie and word as inputs
+ * Returns 1 if True and 0 if False
  *
  **/
 int isInTrie(Trie trie, unsigned char *w);
@@ -57,24 +57,6 @@ int isInTrie(Trie trie, unsigned char *w);
  * hashes a transition and outputs a number between 0 and maxNode * MAX_NODE_MULTIPLIER
  */
 int hash_function(int state, unsigned char c, int maxNode);
-
-/**
- * 
- * Insert all prefixes of a word
- */
-void insertPrefixes(Trie trie, unsigned char *w);
-
-/**
- * 
- * Insert all Suffixes of a word
- */
-void insertSuffixes(Trie trie, unsigned char *w);
-
-/**
- * 
- * Insert all factors of a word
- */
-void insertFactors(Trie trie, unsigned char *w);
 
 /* End function prototypes */
 

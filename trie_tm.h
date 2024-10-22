@@ -37,6 +37,7 @@ void insertInTrie(Trie trie, unsigned char *w);
  *
  * Checks whether word exist in Trie, returns 1 if it doesn't exist, and 0 if it does.
  * Args: takes trie and word as inputs
+ * Returns 1 if True or 0 if False
  *
  **/
 int isInTrie(Trie trie, unsigned char *w);
