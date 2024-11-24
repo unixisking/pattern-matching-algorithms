@@ -17,7 +17,10 @@ trie_ht: main_ht.o trie_ht.o
 search: search.o
 	$(CC) -o search search.o $(CFLAGS)
 
+main: main.o
+	$(CC) -o main main.o $(CFLAGS)
+
 .PHONY: clean
 
 clean:
-	$(RM) *.o trie_tm trie_ht
+	$(RM) *.o trie_tm trie_ht main search

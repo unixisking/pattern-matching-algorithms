@@ -2,7 +2,6 @@
 #include "string.h"
 #include "trie_ht.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 /* Inserts prefixes starting with the smallest one */
 void insertPrefixes(Trie trie, unsigned char *w) {
@@ -28,8 +27,8 @@ void insertSuffixes(Trie trie, unsigned char *w) {
   }
 }
 
-
-/* Inserts the factors starting with the prefixes of the longest suffix until we reach the prefixes of the shortest suffixes */
+/* Inserts the factors starting with the prefixes of the longest suffix until we
+ * reach the prefixes of the shortest suffixes */
 void insertFactors(Trie trie, unsigned char *w) {
   int length = strlen((char *)w);
   unsigned char suffix[length + 1];

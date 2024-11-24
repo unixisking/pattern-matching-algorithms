@@ -7,19 +7,21 @@
 /* Data structure declarations */
 
 struct _list {
-    int startNode,
-        targetNode;
-    unsigned char letter;
-    struct _list *next;
+
+  int startNode, targetNode;
+
+  unsigned char letter;
+
+  struct _list *next;
 };
 
 typedef struct _list *List;
 
 struct _trie {
-    int maxNode, /* Max amount of trie nodes */
-        nextNode; /* Index of next available node */
-    List **transitions; 
-    char *finite; /* Finite states */
+  int maxNode,  /* Max amount of trie nodes */
+      nextNode; /* Index of next available node */
+  List **transitions;
+  char *finite; /* Finite states */
 };
 
 typedef struct _trie *Trie;
@@ -54,12 +56,11 @@ void insertInTrie(Trie trie, unsigned char *w);
 int isInTrie(Trie trie, unsigned char *w);
 
 /**
- * hashes a transition and outputs a number between 0 and maxNode * MAX_NODE_MULTIPLIER
+ * hashes a transition and outputs a number between 0 and maxNode *
+ * MAX_NODE_MULTIPLIER
  */
 int hash_function(int state, unsigned char c, int maxNode);
 
 /* End function prototypes */
 
 #endif
-
-
