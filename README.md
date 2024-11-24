@@ -14,7 +14,7 @@
 
 # Trie Data Structure
 
-This repository contains an implementation of a **Trie** (prefix tree) in C, a data structure used to store and search strings efficiently, especially useful in applications like autocomplete and spell-check. Additionally, the repository includes implementations of various string matching algorithms.
+This repository contains an implementation of a **Trie** (prefix tree) in C, a data structure used to store and search strings efficiently, especially useful in applications like autocomplete and spell-check. Additionally, the repository includes implementations of various pattern matching algorithms.
 
 ## Features
 
