@@ -128,7 +128,7 @@ void horspool(const char *text, int n, const char *pattern, int m);
 
 /**
  * Implements the Quick Search algorithm for string matching:
- * Combines simplicity and performance for approximate searching.
+ * Uses the bad character heuristic.
  *
  * @param text The text to search in.
  * @param pattern The pattern to search for.
