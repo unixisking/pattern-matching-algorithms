@@ -26,8 +26,7 @@ int searchWithHelperFunc1(const char *text, int n, const char *pattern, int m);
 /**
  * Brute force algorithm, with strncmp, with fast loop
  */
-int searchWithHelperFunc2(const char *text, int n, const char *pattern,
-                          int m);
+int searchWithHelperFunc2(const char *text, int n, const char *pattern, int m);
 
 /**
  * Brute force algorithm, with strncmp, with fast loop & sentinelle
@@ -39,6 +38,6 @@ void mp(const char *text, int n, const char *pattern, int m);
 void kmp(const char *text, int n, const char *pattern, int m);
 void BM(const char *text, int n, const char *pattern, int m);
 void horspool(const char *text, int n, const char *pattern, int m);
-int quick_search(const char *text, const char *pattern); // TODO
+int quick_search(const char *text, const char *pattern);
 
 #endif

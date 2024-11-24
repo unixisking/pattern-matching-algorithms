@@ -1,6 +1,20 @@
+# Table of Contents
+
+1. [Overview](#overview)
+2. [Features](#features)
+   - [Trie Operations](#trie-operations)
+3. [Project Structure](#project-structure)
+   - [Transition Table Implementation](#transition-table-implementation)
+   - [Hashtable-Based Implementation](#hashtable-based-implementation)
+4. [String Matching Algorithms](#string-matching-algorithms)
+5. [Usage](#usage)
+   - [Running Transition Table Implementation](#running-transition-table-implementation)
+   - [Running Hashtable Implementation](#running-hashtable-implementation)
+   - [Cleaning Executables](#cleaning-executables)
+
 # Trie Data Structure
 
-This repository contains an implementation of a **Trie** (prefix tree) in C, a data structure used to store and search strings efficiently, especially useful in applications like autocomplete and spell-check.
+This repository contains an implementation of a **Trie** (prefix tree) in C, a data structure used to store and search strings efficiently, especially useful in applications like autocomplete and spell-check. Additionally, the repository includes implementations of various string matching algorithms.
 
 ## Features
 
@@ -41,6 +55,66 @@ typedef struct _trie *Trie;
 
 ```
 
+## String Matching Algorithms
+
+The repository includes implementations of several string matching algorithms:
+
+- **Brute Force Algorithms**: Simple and direct methods to find matches in a string.
+- **Morris-Pratt (MP)**: Efficient searching algorithm using a prefix function.
+- **Knuth-Morris-Pratt (KMP)**: Extension of MP that optimizes prefix matching.
+- **Boyer-Moore**: A highly efficient algorithm leveraging bad character and good suffix heuristics.
+
+```c
+/**
+ *
+ * Brute force algorithm, no fast loop & no sentinelle.
+ */
+int bruteFS1(const char *text, int n, const char *pattern, int m);
+/**
+ *
+ * Brute force algorithm, with fast loop & no sentinelle.
+ */
+int bruteFS2(const char *text, int n, const char *pattern, int m);
+/**
+ *
+ * Brute force algorithm, with fast loop & sentinelle.
+ */
+int bruteFS3(char *text, int n, const char *pattern, int m);
+/**
+ * Brute force algorithm, with strncmp, no fast loop
+ */
+int searchWithHelperFunc1(const char *text, int n, const char *pattern, int m);
+/**
+ * Brute force algorithm, with strncmp, with fast loop
+ */
+int searchWithHelperFunc2(const char *text, int n, const char *pattern, int m);
+/**
+ * Brute force algorithm, with strncmp, with fast loop & sentinelle
+ */
+int searchWithHelperFunc3(char *text, int n, const char *pattern, int m);
+/**
+ * Implements the Morris-Pratt algorithm for pattern matching.
+ */
+void mp(const char *text, int n, const char *pattern, int m);
+/**
+ * Implements the Knuth-Morris-Pratt algorithm for efficient pattern matching.
+ */
+void kmp(const char *text, int n, const char *pattern, int m);
+/**
+ * Implements the Boyer-Moore algorithm for advanced string searching.
+ */
+void BM(const char *text, int n, const char *pattern, int m);
+/**
+ * Implements the Horspool algorithm, a simplified variant of Boyer-Moore.
+ */
+void horspool(const char *text, int n, const char *pattern, int m);
+/**
+ * Implements a quick search algorithm for approximate string matching.
+ */
+int quick_search(const char *text, const char *pattern);
+```
+
+
 #### Usage
 
 And to run the transition table implementation :
@@ -80,7 +154,7 @@ typedef struct _trie *Trie;
 ```
 
 
-#### Usage
+#### Run the code
 
 To run the hash table implementation :
 
