@@ -20,7 +20,10 @@ search: search.o
 main: main.o
 	$(CC) -o main main.o $(CFLAGS)
 
+gen: generator.o
+	$(CC) -o generator generator.o $(CFLAGS)
+
 .PHONY: clean
 
 clean:
-	$(RM) *.o trie_tm trie_ht main search
+	$(RM) *.o trie_tm trie_ht main search generator
