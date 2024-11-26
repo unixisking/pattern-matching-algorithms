@@ -1,7 +1,6 @@
-
+#include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 
 int genRandomChar(int min, int max) { return rand() % (max + 1 - min) + min; }
 
@@ -32,30 +31,81 @@ void generateWordlist(int size, int alphabetSize, char alphabet[alphabetSize],
   }
 }
 
-int main() {
-  int size = 100;
-  int alphabetSize = 3;
-  int wordLength = 3;
-  char wordList[size][wordLength + 1];
+typedef struct Generator {
+  char *kind;
+  int size;
+  int alphabetSize;
+  int wordLength; // wordlist case
+} Generator;
 
-  char alphabet[alphabetSize];
-  int textSize = 100;
-  char text[textSize];
+int main(int argc, char **argv) {
 
-  srand((unsigned int)time((NULL)));
-
-  genAlphabet(alphabetSize, alphabet);
-  generateWordlist(size, alphabetSize, alphabet, wordLength, wordList);
-  generateText(textSize, alphabetSize, alphabet, text);
-
-  printf("print wordlist \n");
-  for (int i = 0; i < size; i++) {
-    printf("Word %d: %s\n", i + 1, wordList[i]);
+  Generator *gen = malloc(sizeof(Generator));
+  if (gen == NULL) {
+    perror("Error allocating memory for generator");
+    exit(1);
   }
 
-  printf("printing text\n");
-  for (int i = 0; i < size; i++) {
-    printf("%c", text[i]);
+  gen->kind = NULL;
+  gen->size = 0;
+  gen->alphabetSize = 0;
+  gen->wordLength = 0;
+
+  int opt;
+  while ((opt = getopt(argc, argv, "t:w:a:l:")) != -1) {
+    switch (opt) {
+    case 't':
+      gen->kind = "text";
+      if (optarg) {
+        gen->size = atoi(optarg);
+
+      } else {
+        perror("Option -t requires a value");
+        exit(1);
+      }
+      break;
+    case 'w':
+      gen->kind = "wordlist";
+      if (optarg) {
+        gen->size = atoi(optarg);
+
+      } else {
+        perror("Option -w requires a value");
+        exit(1);
+      }
+      break;
+    case 'a':
+      if (optarg) {
+        gen->alphabetSize = atoi(optarg);
+      } else {
+        perror("Option -a requires a value");
+        exit(1);
+      }
+      break;
+    case 'l':
+      if (optarg) {
+        gen->wordLength = atoi(optarg);
+      } else {
+        perror("Option -l requires a value");
+        exit(1);
+      }
+      break;
+    default: /* '?' */
+      fprintf(stderr, "Usage: %s [-t value] [-w value] [-ya]\n", argv[0]);
+      exit(1);
+    }
   }
+  // Check if a kind was specified
+  if (gen->kind == NULL) {
+    fprintf(stderr, "You must specify a kind with -t or -w\n");
+    free(gen);
+    exit(1);
+  }
+
+  printf("Kind: %s\nSize: %d\nAlphabet Size: %d\nWord Length: %d\n", gen->kind,
+         gen->size, gen->alphabetSize, gen->wordLength);
+
+  free(gen);
+
   return 0;
 }
