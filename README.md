@@ -65,52 +65,19 @@ The repository includes implementations of several string matching algorithms:
 - **Boyer-Moore**: A highly efficient algorithm leveraging bad character and good suffix heuristics.
 
 ```c
-/**
- *
- * Brute force algorithm, no fast loop & no sentinelle.
- */
+
 int bruteFS1(const char *text, int n, const char *pattern, int m);
-/**
- *
- * Brute force algorithm, with fast loop & no sentinelle.
- */
+
 int bruteFS2(const char *text, int n, const char *pattern, int m);
-/**
- *
- * Brute force algorithm, with fast loop & sentinelle.
- */
+
 int bruteFS3(char *text, int n, const char *pattern, int m);
-/**
- * Brute force algorithm, with strncmp, no fast loop
- */
 int searchWithHelperFunc1(const char *text, int n, const char *pattern, int m);
-/**
- * Brute force algorithm, with strncmp, with fast loop
- */
 int searchWithHelperFunc2(const char *text, int n, const char *pattern, int m);
-/**
- * Brute force algorithm, with strncmp, with fast loop & sentinelle
- */
 int searchWithHelperFunc3(char *text, int n, const char *pattern, int m);
-/**
- * Implements the Morris-Pratt algorithm for pattern matching.
- */
 void mp(const char *text, int n, const char *pattern, int m);
-/**
- * Implements the Knuth-Morris-Pratt algorithm for efficient pattern matching.
- */
 void kmp(const char *text, int n, const char *pattern, int m);
-/**
- * Implements the Boyer-Moore algorithm for advanced string searching.
- */
 void BM(const char *text, int n, const char *pattern, int m);
-/**
- * Implements the Horspool algorithm, a simplified variant of Boyer-Moore.
- */
 void horspool(const char *text, int n, const char *pattern, int m);
-/**
- * Implements a quick search algorithm for approximate string matching.
- */
 int quick_search(const char *text, const char *pattern);
 ```
 
