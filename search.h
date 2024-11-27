@@ -80,7 +80,7 @@ int searchWithHelperFunc2(const char *text, int n, const char *pattern, int m);
  * text, or -1 if not found.
  */
 int searchWithHelperFunc3(char *text, int n, const char *pattern,
-                          int m); // TODO
+                          int m);
 
 /**
  * Implements the Morris-Pratt (MP) algorithm for string matching:

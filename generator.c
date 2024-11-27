@@ -1,34 +1,83 @@
 #include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 int genRandomChar(int min, int max) { return rand() % (max + 1 - min) + min; }
 
 void genAlphabet(int size, char alphabet[size]) {
   for (int i = 0; i < size; i++) {
-    // ASCII printable characters 32-127
-    alphabet[i] = genRandomChar(32, 127);
+    char newChar;
+    int isUnique;
+
+    do {
+      isUnique = 1; // Supposons que le caractère est unique
+      newChar = genRandomChar(33, 126);
+
+      // Vérifions s'il existe déjà dans l'alphabet
+      for (int j = 0; j < i; j++) {
+        if (alphabet[j] == newChar) {
+          isUnique = 0; // Pas unique, on doit générer un nouveau caractère
+          break;
+        }
+      }
+    } while (!isUnique);
+
+    alphabet[i] = newChar; // Ajoutons le caractère unique à l'alphabet
   }
 }
 
-void generateText(int size, int alphabetSize, char alphabet[alphabetSize],
-                  char text[size]) {
-
-  for (int i = 0; i < size; i++) {
-    text[i] = alphabet[genRandomChar(0, alphabetSize - 1)];
+void generateText(int textLength, int alphabetSize,
+                  char alphabet[alphabetSize]) {
+  for (int i = 0; i < textLength; i++) {
+    printf("%c", alphabet[rand() % alphabetSize]);
   }
-  text[size] = '\0';
+  printf("\n");
 }
 
-void generateWordlist(int size, int alphabetSize, char alphabet[alphabetSize],
-                      int wordLength, char wordList[size][wordLength + 1]) {
-
-  for (int i = 0; i < size; i++) {
+void generateWordlist(int wordCount, int wordLength, int alphabetSize,
+                      char alphabet[alphabetSize]) {
+  for (int i = 0; i < wordCount; i++) {
     for (int j = 0; j < wordLength; j++) {
-      wordList[i][j] = alphabet[genRandomChar(0, alphabetSize - 1)];
+      printf("%c", alphabet[rand() % alphabetSize]);
     }
-    wordList[i][wordLength] = '\0';
+    printf("\n");
   }
+}
+
+void saveAlphabetToFile(const char *filename, int size, char alphabet[size]) {
+  FILE *file = fopen(filename, "w");
+  if (file == NULL) {
+    perror("Error opening file");
+    exit(1);
+  }
+  for (int i = 0; i < size; i++) {
+    fputc(alphabet[i], file);
+  }
+  fclose(file);
+}
+
+void usage(const char *progName) {
+  printf("Usage: %s -m <mode> -a <alphabet_size> [-l <word_length>] [-n "
+         "<word_count>] [-i <alphabet_filepath>]\n",
+         progName);
+  printf("Modes:\n");
+  printf("  g : Generate and save an alphabet to 'alphabet.txt'\n");
+  printf("  w : Generate a wordlist using 'alphabet.txt'\n");
+  exit(1);
+}
+
+void loadAlphabetFromFile(const char *filename, int size, char alphabet[size]) {
+  FILE *file = fopen(filename, "r");
+  if (file == NULL) {
+    perror("Error opening file");
+    exit(1);
+  }
+  for (int i = 0; i < size; i++) {
+    alphabet[i] = fgetc(file);
+  }
+  fclose(file);
 }
 
 typedef struct Generator {
@@ -39,73 +88,61 @@ typedef struct Generator {
 } Generator;
 
 int main(int argc, char **argv) {
+  srand(time(NULL)); // Seed the random number generator
 
-  Generator *gen = malloc(sizeof(Generator));
-  if (gen == NULL) {
-    perror("Error allocating memory for generator");
-    exit(1);
-  }
-
-  gen->kind = NULL;
-  gen->size = 0;
-  gen->alphabetSize = 0;
-  gen->wordLength = 0;
+  char mode = 0;
+  char *alphabet_filepath = NULL;
+  int alphabetSize = 0;
+  int length = 0;
+  int count = 0;
 
   int opt;
-  while ((opt = getopt(argc, argv, "t:w:a:l:")) != -1) {
+  while ((opt = getopt(argc, argv, "m:a:l:n:i:")) != -1) {
     switch (opt) {
-    case 't':
-      gen->kind = "text";
-      if (optarg) {
-        gen->size = atoi(optarg);
-
-      } else {
-        perror("Option -t requires a value");
-        exit(1);
-      }
-      break;
-    case 'w':
-      gen->kind = "wordlist";
-      if (optarg) {
-        gen->size = atoi(optarg);
-
-      } else {
-        perror("Option -w requires a value");
-        exit(1);
-      }
+    case 'm':
+      mode = optarg[0];
       break;
     case 'a':
-      if (optarg) {
-        gen->alphabetSize = atoi(optarg);
-      } else {
-        perror("Option -a requires a value");
-        exit(1);
-      }
+      alphabetSize = atoi(optarg);
       break;
     case 'l':
-      if (optarg) {
-        gen->wordLength = atoi(optarg);
-      } else {
-        perror("Option -l requires a value");
-        exit(1);
-      }
+      length = atoi(optarg);
       break;
-    default: /* '?' */
-      fprintf(stderr, "Usage: %s [-t value] [-w value] [-ya]\n", argv[0]);
-      exit(1);
+    case 'n':
+      count = atoi(optarg);
+      break;
+    case 'i':
+      alphabet_filepath = optarg;
+      break;
+    default:
+      usage(argv[0]);
     }
   }
-  // Check if a kind was specified
-  if (gen->kind == NULL) {
-    fprintf(stderr, "You must specify a kind with -t or -w\n");
-    free(gen);
-    exit(1);
+
+  if (!mode || alphabetSize <= 0 ||
+      (mode == 'w' &&
+       (length <= 0 || count <= 0 || alphabet_filepath == NULL)) ||
+      (mode == 't' && (length <= 0 || alphabet_filepath == NULL))) {
+    usage(argv[0]);
   }
 
-  printf("Kind: %s\nSize: %d\nAlphabet Size: %d\nWord Length: %d\n", gen->kind,
-         gen->size, gen->alphabetSize, gen->wordLength);
-
-  free(gen);
+  char alphabet[alphabetSize];
+  switch (mode) {
+  case 'g':
+    genAlphabet(alphabetSize, alphabet);
+    printf("%s", alphabet);
+    break;
+  case 'w':
+    loadAlphabetFromFile(alphabet_filepath, alphabetSize, alphabet);
+    generateWordlist(count, length, alphabetSize, alphabet);
+    break;
+  case 't':
+    loadAlphabetFromFile(alphabet_filepath, alphabetSize, alphabet);
+    generateText(length, alphabetSize, alphabet);
+    break;
+  default:
+    usage(argv[0]);
+  }
 
   return 0;
 }
