@@ -67,9 +67,7 @@ The repository includes implementations of several string matching algorithms:
 ```c
 
 int bruteFS1(const char *text, int n, const char *pattern, int m);
-
 int bruteFS2(const char *text, int n, const char *pattern, int m);
-
 int bruteFS3(char *text, int n, const char *pattern, int m);
 int searchWithHelperFunc1(const char *text, int n, const char *pattern, int m);
 int searchWithHelperFunc2(const char *text, int n, const char *pattern, int m);
