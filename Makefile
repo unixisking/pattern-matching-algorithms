@@ -14,11 +14,11 @@ trie_tm: main_tm.o trie_tm.o
 trie_ht: main_ht.o trie_ht.o
 	$(CC) -o trie_ht main_ht.o trie_ht.o $(CFLAGS)
 
+algos: algos.o
+	$(CC) -o algos algos.o $(CFLAGS)
+
 search: search.o
 	$(CC) -o search search.o $(CFLAGS)
-
-main: main.o
-	$(CC) -o main main.o $(CFLAGS)
 
 gen: generator.o
 	$(CC) -o generator generator.o $(CFLAGS)
@@ -26,4 +26,4 @@ gen: generator.o
 .PHONY: clean
 
 clean:
-	$(RM) *.o trie_tm trie_ht main search generator
+	$(RM) *.o trie_tm trie_ht algos search generator

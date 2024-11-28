@@ -80,13 +80,6 @@ void loadAlphabetFromFile(const char *filename, int size, char alphabet[size]) {
   fclose(file);
 }
 
-typedef struct Generator {
-  char *kind;
-  int size;
-  int alphabetSize;
-  int wordLength; // wordlist case
-} Generator;
-
 int main(int argc, char **argv) {
   srand(time(NULL)); // Seed the random number generator
 
