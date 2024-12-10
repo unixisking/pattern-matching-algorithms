@@ -4,6 +4,7 @@
 
 1. [Pattern Matching Algorithms](#pattern-matching-algorithms)
    - [Project Overview](#project-overview)
+   - [Technologies Used](#technologies-used)
    - [Project Structure](#project-structure)
      - [Directories and Files](#directories-and-files)
    - [Algorithms Implemented](#algorithms-implemented)
@@ -14,10 +15,18 @@
      - [Performance with an Alphabet of Size 2](#performance-with-an-alphabet-of-size-2)
      - [Performance with an Alphabet of Size 70](#performance-with-an-alphabet-of-size-70)
    - [Conclusion](#conclusion)
+   - [License](#license)
 
 ## Project Overview
 
 The project analyzes the performance of pattern-matching algorithms on pseudo-randomly generated texts of 500,000 characters. Tests were conducted using alphabets of sizes 2 and 70, with pattern lengths varying from 4 to 50.
+
+
+## Technologies Used
+
+- 🚀 **C**: Core programming language for the algorithms.
+- 🐍 **Python**: For generating performance graphs.
+- 📊 **Matplotlib & NumPy**: Data visualization and processing.
 
 ## Project Structure
 
@@ -129,3 +138,9 @@ The benchmarks are measured using the C times library's clock function which mea
 
 ##  Conclusion
 **Boyer-Moore (BM), Horspool (HP), and Quick Search (QS):**  are clearly the favorites here, they demonstrate significant improvements for longer patterns due to larger shifts after mismatches, especially with larger alphabets. Brute force shows better performance than MP/KMP in very large alphabet sizes because of added fast loop and sentinelle which allows it move faster until the first character match.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+![GitHub license](https://img.shields.io/github/license/unixisking/pattern-matching-algorithms)
