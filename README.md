@@ -79,5 +79,19 @@ The characters used in the alphabet are randomly generated from ASCII printable 
 ## Benchmarks and Observations
 ![Benchmarks for each algorithm with an alphabet of size 2 and 70](graph/comparison_plot.png "Benchmarks for each algorithm with an alphabet of size 2 and 70")
 
+### Performance with an Alphabet of Size 2
+
+- **Boyer-Moore (BM):**  
+  BM exhibits relatively longer execution times for smaller alphabets, particularly with shorter patterns. This is because its heuristics (the bad character rule and the good suffix rule) are less effective when the number of unique characters is small. This behavior aligns with its average-case theoretical complexity of $O\left(\frac{n}{m} + m\right)$.
+
+- **Horspool (HP) and Quick Search (QS):**  
+  Horspool's simplified heuristic results in slower performance with smaller alphabets, as the limited diversity of characters reduces effective shifts. Its worst-case complexity is $O(n \cdot m)$. Quick Search follows a similar trend but with slightly different shift mechanisms.
+
+- **Knuth-Morris-Pratt (KMP) and Morris-Pratt (MP):**  
+  These algorithms exhibit constant performance regardless of alphabet size, consistent with their $O(n + m)$ complexity. However, with smaller alphabets, they are less efficient due to the limited diversity of characters, which reduces their ability to make large jumps.
+
+- **HF3 and BF3 (Brute Force Variants):**  
+  Brute-force variants with a complexity of $O(n \cdot m)$ that use fast loops and sentinels perform less effectively with small alphabets due to the lack of character diversity. Frequent matches of the initial characters that do not lead to a full pattern match limit the algorithm's efficiency in skipping comparisons until the first character match.
+
 
 ##  Conclusion
