@@ -76,8 +76,8 @@ The characters used in the alphabet are randomly generated from ASCII printable 
   python main.py
 ```
 
+## Benchmarks and Observations
+![Benchmarks for each algorithm with an alphabet of size 2 and 70](graph/comparison_plot.png "Benchmarks for each algorithm with an alphabet of size 2 and 70")
+
 
 ##  Conclusion
-- Algorithms like Boyer-Moore and Quick Search show significant improvements for longer patterns and larger alphabets.
-- KMP and MP offer consistent linear performance.
-- Brute-force variants are less efficient but demonstrate optimization potential through loop and sentinel usage.
