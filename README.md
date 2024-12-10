@@ -64,8 +64,7 @@ Run the following commands to generate the required data:
 
 The characters used in the alphabet are randomly generated from ASCII printable characters (character codes 32-127)
 
-## Running the project
-1. Compile and execute the search program:
+### Compile and execute to generate the graph
 
 ```bash
   ./search -a algo -t text_file -w wordlist_file -m pattern_length
@@ -75,10 +74,13 @@ The characters used in the alphabet are randomly generated from ASCII printable 
   pip install -r matplotlib numpy
   python main.py
 ```
+This will run all the algorithms on the **algos.c** file against the text and wordlists present in the **gen** folder and plot a graph with the benchmarks like the one below.
+
 
 ## Benchmarks and Observations
 ![Benchmarks for each algorithm with an alphabet of size 2 and 70](graph/comparison_plot.png "Benchmarks for each algorithm with an alphabet of size 2 and 70")
 
+The benchmarks are measured using the C times library's clock function which measures processor and CPU time.
 ### Performance with an Alphabet of Size 2
 
 - **Boyer-Moore (BM):**  
