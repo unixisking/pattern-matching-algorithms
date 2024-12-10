@@ -1,142 +1,83 @@
-# Table of Contents
+# Pattern Matching Algorithms
+## Project Overview
 
-1. [Overview](#overview)
-2. [Features](#features)
-   - [Trie Operations](#trie-operations)
-3. [Project Structure](#project-structure)
-   - [Transition Table Implementation](#transition-table-implementation)
-   - [Hashtable-Based Implementation](#hashtable-based-implementation)
-4. [String Matching Algorithms](#string-matching-algorithms)
-5. [Usage](#usage)
-   - [Running Transition Table Implementation](#running-transition-table-implementation)
-   - [Running Hashtable Implementation](#running-hashtable-implementation)
-   - [Cleaning Executables](#cleaning-executables)
-
-# Trie Data Structure
-
-This repository contains an implementation of a **Trie** (prefix tree) in C, a data structure used to store and search strings efficiently, especially useful in applications like autocomplete and spell-check. Additionally, the repository includes implementations of various pattern matching algorithms.
-
-## Features
-
-- **Insert words** into the Trie.
-- **Search words** to check their existence in the Trie.
-- **Add Prefixes** of a word
-- **Add Suffixes** of a word
-- **Add Factors** of a word
-
-
-```c
-Trie createTrie(int maxNode);
-void insertInTrie(Trie trie, unsigned char *w);
-int isInTrie(Trie trie, unsigned char *w);
-void insertPrefixes(Trie trie, unsigned char *w);
-void insertSuffixes(Trie trie, unsigned char *w);
-void insertFactors(Trie trie, unsigned char *w);
-```
+The project analyzes the performance of pattern-matching algorithms on pseudo-randomly generated texts of 500,000 characters. Tests were conducted using alphabets of sizes 2 and 70, with pattern lengths varying from 4 to 50.
 
 ## Project Structure
 
-### Transition table implementation
+The repository is organized as follows:
 
-- `trie-tm.h`: Header file containing Trie structure definitions and function prototypes.
-- `trie-tm.c`: Source file with function implementations for the Trie operations.
-- `main_tm.c`: Example usage by adding the word the prefixes, suffixes, and the factors of "abaababa"
+### Directories and Files
 
+- **`Gen/`**: Contains the generated text, alphabets, and word lists for testing.
+  - Subdirectories like `alph-x/` correspond to different alphabet sizes (e.g., `2`, `70`).
+  - Files include `alphabet.txt`, `text.txt`, and `wordlist-m.txt` where `m` is the pattern length.
 
-```c
-struct _trie {
-	int maxNode; /* maximum number of trie nodes */
-	int nextNode; /* Index of next available node */
-	int **transitions; /* transition matrix */
-	char *finite; /* finite states  */
-};
+- **`Graph/`**: Contains a Python script (`main.py`) and a virtual environment for generating performance graphs.
+  - Python 3.12.3 is used with `numpy` and `matplotlib`.
 
-typedef struct _trie *Trie;
+- **`generator.c`**: Generates text, alphabets, and word lists based on specified parameters.
 
+- **`gen.sh`**: Shell script to automate the generation process.
+
+- **`algos.c`**: Contains implementations of the pattern-matching algorithms.
+
+- **`search.c`**: Executes the algorithms from `algos.c`.
+
+## Algorithms Implemented
+
+The following algorithms are implemented in `algos.c`:
+
+- **Brute Force**:
+  - `bruteFS1`: Without fast loop or sentinel.
+  - `bruteFS2`: With fast loop, without sentinel.
+  - `bruteFS3`: With fast loop and sentinel.
+- **Helper Function Variants**:
+  - `searchWithHelperFunc1`: Uses `strncmp`, without fast loop or sentinel.
+  - `searchWithHelperFunc2`: Uses `strncmp`, with fast loop, without sentinel.
+  - `searchWithHelperFunc3`: Uses `strncmp`, with fast loop and sentinel.
+- **Classic Algorithms**:
+  - Morris-Pratt (MP)
+  - Knuth-Morris-Pratt (KMP)
+  - Boyer-Moore (BM)
+  - Horspool (HP)
+  - Quick Search (QS)
+
+## Running the Project
+
+### Generating Data
+
+Run the following commands to generate the required data:
+
+1. Generate the alphabet:
+```bash
+  ./generator -m g -a 4
+ ```
+2. Generate the text:
+```bash
+  ./generator -m t -a 4 -l 500000 -i ./gen/alph-4/alphabet.txt > ./gen/alph-4/text.txt
+```
+3. Generate a wordlist that contains 100 words, 8 characters each with an alphabet of size 4:
+```bash
+  ./generator -m w -a 4 -l 8 -n 100 -i ./gen/alph-4/alphabet > wordlist-8.txt
 ```
 
-## String Matching Algorithms
+The characters used in the alphabet are randomly generated from ASCII printable characters (character codes 32-127)
 
-The repository includes implementations of several string matching algorithms:
+## Running the project
+1. Compile and execute the search program:
 
-- **Brute Force Algorithms**: Simple and direct methods to find matches in a string.
-- **Morris-Pratt (MP)**: Efficient searching algorithm using a prefix function.
-- **Knuth-Morris-Pratt (KMP)**: Extension of MP that optimizes prefix matching.
-- **Boyer-Moore**: A highly efficient algorithm leveraging bad character and good suffix heuristics.
-
-```c
-
-int bruteFS1(const char *text, int n, const char *pattern, int m);
-int bruteFS2(const char *text, int n, const char *pattern, int m);
-int bruteFS3(char *text, int n, const char *pattern, int m);
-int searchWithHelperFunc1(const char *text, int n, const char *pattern, int m);
-int searchWithHelperFunc2(const char *text, int n, const char *pattern, int m);
-int searchWithHelperFunc3(char *text, int n, const char *pattern, int m);
-void mp(const char *text, int n, const char *pattern, int m);
-void kmp(const char *text, int n, const char *pattern, int m);
-void BM(const char *text, int n, const char *pattern, int m);
-void horspool(const char *text, int n, const char *pattern, int m);
-int quick_search(const char *text, const char *pattern);
-```
-
-
-#### Usage
-
-And to run the transition table implementation :
-
-```c
-
-make trie_tm && ./trie_tm
-
-```
-
-### Hashtable based implementation
-
-- `trie-ht.h`: Header file containing Trie structure definitions and function prototypes.
-- `trie-ht.c`: Source file with function implementations for the Trie operations.
-- `main_ht.c`: Example usage by adding the word the prefixes, suffixes, and the factors of "abaababa"
-
-```c
-
-struct _list {
-    int startNode,
-        targetNode;
-    unsigned char letter;
-    struct _list *next;
-};
-
-typedef struct _list *List;
-
-struct _trie {
-    int maxNode, /* Max amount of trie nodes */
-        nextNode; /* Index of next available node */
-    List **transitions; /* Adjacency list */
-    char *finite; /* Finite states */
-};
-
-typedef struct _trie *Trie;
-
+```bash
+  ./search -a algo -t text_file -w wordlist_file -m pattern_length
+  cd Graph/
+  python -m venv env
+  . env/bin/activate
+  pip install -r matplotlib numpy
+  python main.py
 ```
 
 
-#### Run the code
-
-To run the hash table implementation :
-
-
-```c
-
-make trie_ht && ./trie_ht
-
-```
-
-To clean the project from executables :
-
-```c
-
-make clean
-
-```
-
-
-
+##  Conclusion
+- Algorithms like Boyer-Moore and Quick Search show significant improvements for longer patterns and larger alphabets.
+- KMP and MP offer consistent linear performance.
+- Brute-force variants are less efficient but demonstrate optimization potential through loop and sentinel usage.
