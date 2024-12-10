@@ -108,13 +108,5 @@ The characters used in the alphabet are randomly generated from ASCII printable 
   Traditional brute force methods generally degrade in performance as pattern length increases, given their $O(n \cdot m)$ complexity. This is especially evident with larger alphabets, where character mismatches require more exhaustive comparisons. However, this is mitigated here due to the use of fast loops and sentinels, enabling the algorithms to perform well with larger alphabets. The diversity of characters and the ability of the algorithm to skip comparisons until the first character match significantly improve efficiency.
 
 
-
 ##  Conclusion
-- **Boyer-Moore (BM), Horspool (HP), and Quick Search (QS):**  
-  These algorithms demonstrate significant improvements for longer patterns due to larger shifts after mismatches, especially with larger alphabets.
-
-- **Knuth-Morris-Pratt (KMP) and Morris-Pratt (MP):**  
-  KMP and MP are less sensitive to pattern length, exhibiting consistent performance due to their linear complexity, $O(n + m)$.
-
-- **HF3 and BF3 (Brute Force Variants):**  
-  HF3 and BF3 show notable performance degradation as pattern length increases, reflecting their $O(n \cdot m)$ complexity. However, additional optimizations can significantly improve their efficiency and reduce this degradation.
+**Boyer-Moore (BM), Horspool (HP), and Quick Search (QS):**  are clearly the favorites here, they demonstrate significant improvements for longer patterns due to larger shifts after mismatches, especially with larger alphabets. Brute force shows better performance than MP/KMP in very large alphabet sizes because of added fast loop and sentinelle which allows it move faster until the first character match.
