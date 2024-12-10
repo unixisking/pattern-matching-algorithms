@@ -1,4 +1,20 @@
 # Pattern Matching Algorithms
+
+## Table of Contents
+
+1. [Pattern Matching Algorithms](#pattern-matching-algorithms)
+   - [Project Overview](#project-overview)
+   - [Project Structure](#project-structure)
+     - [Directories and Files](#directories-and-files)
+   - [Algorithms Implemented](#algorithms-implemented)
+   - [Running the Project](#running-the-project)
+     - [Generating Data](#generating-data)
+     - [Compile and execute to generate the graph](#compile-and-execute-to-generate-the-graph)
+   - [Benchmarks and Observations](#benchmarks-and-observations)
+     - [Performance with an Alphabet of Size 2](#performance-with-an-alphabet-of-size-2)
+     - [Performance with an Alphabet of Size 70](#performance-with-an-alphabet-of-size-70)
+   - [Conclusion](#conclusion)
+
 ## Project Overview
 
 The project analyzes the performance of pattern-matching algorithms on pseudo-randomly generated texts of 500,000 characters. Tests were conducted using alphabets of sizes 2 and 70, with pattern lengths varying from 4 to 50.
@@ -67,6 +83,7 @@ The characters used in the alphabet are randomly generated from ASCII printable 
 ### Compile and execute to generate the graph
 
 ```bash
+  make search
   ./search -a algo -t text_file -w wordlist_file -m pattern_length
   cd Graph/
   python -m venv env
