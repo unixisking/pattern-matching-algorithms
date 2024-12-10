@@ -110,3 +110,11 @@ The characters used in the alphabet are randomly generated from ASCII printable 
 
 
 ##  Conclusion
+- **Boyer-Moore (BM), Horspool (HP), and Quick Search (QS):**  
+  These algorithms demonstrate significant improvements for longer patterns due to larger shifts after mismatches, especially with larger alphabets.
+
+- **Knuth-Morris-Pratt (KMP) and Morris-Pratt (MP):**  
+  KMP and MP are less sensitive to pattern length, exhibiting consistent performance due to their linear complexity, $O(n + m)$.
+
+- **HF3 and BF3 (Brute Force Variants):**  
+  HF3 and BF3 show notable performance degradation as pattern length increases, reflecting their $O(n \cdot m)$ complexity. However, additional optimizations can significantly improve their efficiency and reduce this degradation.
