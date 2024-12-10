@@ -93,5 +93,20 @@ The characters used in the alphabet are randomly generated from ASCII printable 
 - **HF3 and BF3 (Brute Force Variants):**  
   Brute-force variants with a complexity of $O(n \cdot m)$ that use fast loops and sentinels perform less effectively with small alphabets due to the lack of character diversity. Frequent matches of the initial characters that do not lead to a full pattern match limit the algorithm's efficiency in skipping comparisons until the first character match.
 
+### Performance with an Alphabet of Size 70
+
+- **Boyer-Moore (BM):**  
+  BM demonstrates exceptional performance with larger alphabets and patterns, leveraging its heuristics to make larger jumps after mismatches. This aligns with its average-case complexity of $O\left(\frac{n}{m} + m\right)$. For larger alphabets, BM's heuristics become more effective, significantly reducing the number of comparisons.
+
+- **Horspool (HP) and Quick Search (QS):**  
+  Horspool and Quick Search perform better with larger alphabets and shorter patterns because their simplified heuristics result in larger average jumps.
+
+- **Knuth-Morris-Pratt (KMP) and Morris-Pratt (MP):**  
+  KMP and MP maintain consistent linear performance but are less efficient than BM, Horspool, and Quick Search for both small and large alphabets. Their $O(n + m)$ complexity ensures stable performance, but their ability to exploit heuristics is less effective compared to BM, Horspool, and Quick Search, especially with large alphabets.
+
+- **HF3 and BF3 (Brute Force Variants):**  
+  Traditional brute force methods generally degrade in performance as pattern length increases, given their $O(n \cdot m)$ complexity. This is especially evident with larger alphabets, where character mismatches require more exhaustive comparisons. However, this is mitigated here due to the use of fast loops and sentinels, enabling the algorithms to perform well with larger alphabets. The diversity of characters and the ability of the algorithm to skip comparisons until the first character match significantly improve efficiency.
+
+
 
 ##  Conclusion
