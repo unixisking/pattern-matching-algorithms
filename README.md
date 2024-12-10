@@ -19,7 +19,7 @@
 
 ## Project Overview
 
-The project analyzes the performance of pattern-matching algorithms on pseudo-randomly generated texts of 500,000 characters. Tests were conducted using alphabets of sizes 2 and 70, with pattern lengths varying from 4 to 50.
+In this project, we analyze the performance of pattern-matching algorithms on pseudo-randomly generated texts of 500,000 characters. Tests were conducted using alphabets of sizes 2 and 70, with pattern lengths varying from 4 to 50.
 
 
 ## Technologies Used
