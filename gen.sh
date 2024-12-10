@@ -18,7 +18,7 @@ for alphabet_size in "${alphabet_sizes[@]}"; do
   ./generator -m t -a "$alphabet_size" -l 500000 -i ./gen/"alph-$alphabet_size"/$alphabet_file > ./gen/"alph-$alphabet_size"/text.txt
   
    for word_length in "${word_lengths[@]}"; do
-     output_file="${output_dir}/"alph-$alphabet_size"/wordlist_alph-${alphabet_size}-wordlength_${word_length}.txt"
+     output_file="${output_dir}/"alph-$alphabet_size"/wordlist-${word_length}.txt"
 
      ./generator -m w -a "$alphabet_size" -l "$word_length" -n "$word_count" -i ./gen/"alph-$alphabet_size"/$alphabet_file > "$output_file"
 

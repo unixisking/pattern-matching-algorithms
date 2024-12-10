@@ -14,7 +14,7 @@
  * @return The starting index of the first occurrence of the pattern in the
  * text, or -1 if not found.
  */
-int bruteFS1(const char *text, int n, const char *pattern, int m);
+void bruteFS1(const char *text, int n, const char *pattern, int m);
 
 /**
  * Brute force string search algorithm with fast loop optimization:
@@ -27,7 +27,7 @@ int bruteFS1(const char *text, int n, const char *pattern, int m);
  * @return The starting index of the first occurrence of the pattern in the
  * text, or -1 if not found.
  */
-int bruteFS2(const char *text, int n, const char *pattern, int m);
+void bruteFS2(const char *text, int n, const char *pattern, int m);
 
 /**
  * Brute force string search algorithm with both fast loop and sentinelle:
@@ -40,7 +40,7 @@ int bruteFS2(const char *text, int n, const char *pattern, int m);
  * @return The starting index of the first occurrence of the pattern in the
  * text, or -1 if not found.
  */
-int bruteFS3(char *text, int n, const char *pattern, int m);
+void bruteFS3(char *text, int n, const char *pattern, int m);
 
 /**
  * Brute force string search algorithm using strncmp:
@@ -53,7 +53,7 @@ int bruteFS3(char *text, int n, const char *pattern, int m);
  * @return The starting index of the first occurrence of the pattern in the
  * text, or -1 if not found.
  */
-int searchWithHelperFunc1(const char *text, int n, const char *pattern, int m);
+void searchWithHelperFunc1(const char *text, int n, const char *pattern, int m);
 
 /**
  * Brute force string search algorithm using strncmp:
@@ -66,7 +66,7 @@ int searchWithHelperFunc1(const char *text, int n, const char *pattern, int m);
  * @return The starting index of the first occurrence of the pattern in the
  * text, or -1 if not found.
  */
-int searchWithHelperFunc2(const char *text, int n, const char *pattern, int m);
+void searchWithHelperFunc2(const char *text, int n, const char *pattern, int m);
 
 /**
  * Brute force string search algorithm using strncmp:
@@ -79,8 +79,7 @@ int searchWithHelperFunc2(const char *text, int n, const char *pattern, int m);
  * @return The starting index of the first occurrence of the pattern in the
  * text, or -1 if not found.
  */
-int searchWithHelperFunc3(char *text, int n, const char *pattern,
-                          int m);
+void searchWithHelperFunc3(char *text, int n, const char *pattern, int m);
 
 /**
  * Implements the Morris-Pratt (MP) algorithm for string matching:
@@ -131,10 +130,12 @@ void horspool(const char *text, int n, const char *pattern, int m);
  * Uses the bad character heuristic.
  *
  * @param text The text to search in.
+ * @param n The length of the text.
  * @param pattern The pattern to search for.
+ * @param m The length of the pattern.
  * @return The starting index of the first occurrence of the pattern in the
  * text, or -1 if not found.
  */
-int quick_search(const char *text, const char *pattern);
+void quickSearch(const char *text, int n, const char *pattern, int m);
 
 #endif

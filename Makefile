@@ -17,8 +17,8 @@ trie_ht: main_ht.o trie_ht.o
 algos: algos.o
 	$(CC) -o algos algos.o $(CFLAGS)
 
-search: search.o
-	$(CC) -o search search.o $(CFLAGS)
+search: search.o algos.o
+	$(CC) -o search search.o algos.o $(CFLAGS)
 
 gen: generator.o
 	$(CC) -o generator generator.o $(CFLAGS)

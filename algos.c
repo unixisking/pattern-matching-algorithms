@@ -1,23 +1,41 @@
-#include "search.h"
+#include "algos.h"
 #include "limits.h"
+// #include "search.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-int bruteFS1(const char *text, int n, const char *pattern, int m) {
+/*
+  Checks if the file is being executed direcly
+  This function is not well written, it uses a global variable and will only
+  work when the file is executed from the same directory to check direct
+  execution
+*/
+int isDirectExecution = 0;
+void checkExecutionMode(int argc, char *argv[]) {
+  printf("%s", argv[0]);
+  if (strcmp(argv[0], "./algos") == 0) {
+    isDirectExecution = 1;
+  } else {
+    isDirectExecution = 0;
+  }
+}
+
+void bruteFS1(const char *text, int n, const char *pattern, int m) {
   for (int i = 0; i <= n - m; i++) {
     int j = 0;
     while (j <= m - 1 && pattern[j] == text[i + j]) {
       j++;
     }
     if (j == m) {
-      return i;
+      if (isDirectExecution == 1) {
+        printf("%d", i);
+      }
     }
   }
-  return -1;
 }
 
-int bruteFS2(const char *text, int n, const char *pattern, int m) {
+void bruteFS2(const char *text, int n, const char *pattern, int m) {
   const char c = pattern[0];
 
   int i = 0;
@@ -31,19 +49,22 @@ int bruteFS2(const char *text, int n, const char *pattern, int m) {
       j++;
     }
     if (j == m) {
-      return i;
+      if (isDirectExecution == 1) {
+        printf("%d", i);
+      }
     }
     i++;
   }
-  return -1;
+  // return -1;
 }
 
 // TODO: Ask about this:  how does a sentinelle make things better?
-int bruteFS3(char *text, int n, const char *pattern, int m) {
+void bruteFS3(char *text, int n, const char *pattern, int m) {
   char *textWithSentinelle = realloc(text, sizeof(char) * (m + n + 1));
   if (textWithSentinelle == NULL) {
     free(text);
-    return -1;
+    // return -1;
+    exit(-1);
   }
   /* Add sentinelle at the end of the text */
   for (int i = n; i < n + m + 1; i++) {
@@ -61,7 +82,7 @@ int bruteFS3(char *text, int n, const char *pattern, int m) {
   while (i <= n - m) {
     // bail if we reach sentinelle
     if (i == n - m) {
-      return -1;
+      break;
     }
 
     int j = 0;
@@ -69,23 +90,28 @@ int bruteFS3(char *text, int n, const char *pattern, int m) {
       j++;
     }
     if (j == m) {
-      return i;
+      if (isDirectExecution == 1) {
+        printf("%d", i);
+      }
     }
     i++;
   }
-  return -1;
 }
 
-int searchWithHelperFunc1(const char *text, int n, const char *pattern, int m) {
+void searchWithHelperFunc1(const char *text, int n, const char *pattern,
+                           int m) {
   for (int i = 0; i <= n - m; i++) {
     if (strncmp(text + i, pattern, m) == 0) {
-      return i;
+      // return i;
+      if (isDirectExecution == 1) {
+        printf("%d", i);
+      }
     }
   }
-  return -1;
 }
 
-int searchWithHelperFunc2(const char *text, int n, const char *pattern, int m) {
+void searchWithHelperFunc2(const char *text, int n, const char *pattern,
+                           int m) {
   const char c = pattern[0];
 
   int i = 0;
@@ -94,19 +120,22 @@ int searchWithHelperFunc2(const char *text, int n, const char *pattern, int m) {
 
   while (i <= n - m) {
     if (strncmp(text + i, pattern, m) == 0) {
-      return i;
+      if (isDirectExecution == 1) {
+        printf("%d", i);
+      }
     }
     i++;
   }
 
-  return -1;
+  // return -1;
 }
 
-int searchWithHelperFunc3(char *text, int n, const char *pattern, int m) {
+void searchWithHelperFunc3(char *text, int n, const char *pattern, int m) {
   char *textWithSentinelle = realloc(text, sizeof(char) * (m + n + 1));
   if (textWithSentinelle == NULL) {
     free(text);
-    return -1;
+    // return -1;
+    exit(-1);
   }
   /* Add sentinelle at the end of the text */
   for (int i = n; i < n + m + 1; i++) {
@@ -122,15 +151,15 @@ int searchWithHelperFunc3(char *text, int n, const char *pattern, int m) {
 
   while (i <= n - m) {
     if (i == n - m) {
-      return -1;
+      break;
     }
     if (strncmp(textWithSentinelle + i, pattern, m) == 0) {
-      return i;
+      if (isDirectExecution == 1) {
+        printf("%d", i);
+      }
     }
     i++;
   }
-
-  return -1;
 }
 void preprocessMp(const char *pattern, int m, int *shift_table) {
   int i = 0, j = shift_table[0] = -1;
@@ -155,7 +184,9 @@ void mp(const char *text, int n, const char *pattern, int m) {
     i++;
     j++;
     if (i == m) {
-      printf("found pattern at index = %d\n", j - i);
+      if (isDirectExecution == 1) {
+        printf("%d", j - i);
+      }
       i = shift_table[i];
     }
   }
@@ -189,8 +220,10 @@ void kmp(const char *text, int n, const char *pattern, int m) {
     }
     i++;
     j++;
-    if (i == m) {
-      printf("found pattern at index = %d\n", j - i);
+    if (i >= m) {
+      if (isDirectExecution == 1) {
+        printf("%d", j - i);
+      }
       i = shift_table[i];
     }
   }
@@ -266,7 +299,9 @@ void BM(const char *text, int n, const char *pattern, int m) {
       i--;
     }
     if (i < 0) {
-      printf("Found pattern %s in text at index: %d", pattern, j);
+      if (isDirectExecution == 1) {
+        printf("Found pattern %s in text at index: %d\n", pattern, j);
+      }
       j += goodSuffixTable[0];
     } else {
       j += MAX(goodSuffixTable[i],
@@ -284,7 +319,9 @@ void horspool(const char *text, int n, const char *pattern, int m) {
   while (j <= n - m) {
     char firstChar = text[j + m - 1];
     if (pattern[m - 1] == firstChar && memcmp(pattern, text + j, m - 1) == 0) {
-      printf("Found pattern in text at index: %d", j);
+      if (isDirectExecution == 1) {
+        printf("Found pattern in text at index: %d", j);
+      }
     }
     j += badCharRuleTable[(int)firstChar];
   }
@@ -307,26 +344,32 @@ void quickSearch(const char *text, int n, const char *pattern, int m) {
   int j = 0;
   while (j <= n - m) {
     if (memcmp(pattern, text + j, m) == 0) {
-      printf("Found pattern in text at index: %d", j);
+      if (isDirectExecution == 1) {
+        printf("Found pattern %s in text at index: %d\n", pattern, j);
+      }
     }
     j += badCharRuleTable[(int)text[m + j]];
   }
 }
 
-int main(int argc, char *argv[]) {
-  char *text = malloc(sizeof(char) * 25);
-  strcpy(text, "GCATCGCAGAGAGTATACAGTACG");
-  // const char *text = "GCATCGCAGAGAGTATACAGTACG";
-  const char *pattern = "GTATA";
+/*
+  This file is meant to run for testing algorithms
+  The search.c file is responsible for executing this file
+*/
+// int main(int argc, char *argv[]) {
+//   checkExecutionMode(argc, argv);
 
-  // printf("bruteForce: %d\n", bruteFS1(text, pattern));
-  // printf("bruteForce: %d\n", searchWithHelperFunc1(text, pattern));
+//   char *text = malloc(sizeof(char) * 25);
+//   strcpy(text, "GCATCGCAGAGAGTATACAGTACG");
+//   // const char *text = "GCATCGCAGAGAGTATACAGTACG";
+//   const char *pattern = "TATA";
 
-  int n = strlen(text);
-  int m = strlen(pattern);
-  printf("helperfunc: %d", searchWithHelperFunc3(text, n, pattern, m));
-
-  quickSearch(text, n, pattern, m);
-
-  return 0;
-}
+//   int n = strlen(text);
+//   int m = strlen(pattern);
+//   bruteFS3(text, n, pattern, m);
+//   printf("\n");
+//   searchWithHelperFunc3(text, n, pattern, m);
+//   printf("\n");
+//   quickSearch(text, n, pattern, m);
+//   return 0;
+// }

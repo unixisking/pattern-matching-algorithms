@@ -4,4 +4,6 @@ tp1
 .ccls-cache
 .idea/
 gen/
+graph/venv
+graph/env
 
